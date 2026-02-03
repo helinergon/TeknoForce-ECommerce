@@ -1,11 +1,10 @@
-//Orders klasöründeki index.cshtml.cs
-
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using TeknoForce.Data;
 using TeknoForce.Data.Models;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace TeknoForce.Pages.Admin.Orders
+namespace TeknoForce.Pages.Admin.Contact.Branches
 {
     public class IndexModel : PageModel
     {
@@ -16,13 +15,12 @@ namespace TeknoForce.Pages.Admin.Orders
             _context = context;
         }
 
-        public List<Order> Orders { get; set; } = new();
+        public List<ContactBranch> Branches { get; set; } = new();
 
         public void OnGet()
         {
-            Orders = _context.Orders
-                .Include(o => o.OrderStatus)
-                .OrderByDescending(o => o.CreatedDate)
+            Branches = _context.ContactBranches
+                .OrderBy(b => b.CreatedDate)
                 .ToList();
         }
     }

@@ -12,8 +12,8 @@ using TeknoForce.Data;
 namespace TeknoForce.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260128061643_AddOrderManagement")]
-    partial class AddOrderManagement
+    [Migration("20260203063548_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,34 @@ namespace TeknoForce.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("TeknoForce.Data.Models.AboutContent", b =>
+                {
+                    b.Property<int>("AboutId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AboutId"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("AboutId");
+
+                    b.ToTable("AboutContents");
+                });
 
             modelBuilder.Entity("TeknoForce.Data.Models.AdminUser", b =>
                 {

@@ -1,4 +1,6 @@
-﻿namespace TeknoForce.Data.Models
+﻿//OrderItem.cs
+
+namespace TeknoForce.Data.Models
 {
     public class OrderItem
     {

@@ -63,6 +63,11 @@ namespace TeknoForce.Data
         public DbSet<ProductSpecification> ProductSpecifications { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<OrderStatus> OrderStatuses { get; set; }
+        public DbSet<AboutContent> AboutContents { get; set; }
+        public  DbSet<ContactContent> ContactContents { get; set; }
+        public DbSet<ContactBranch> ContactBranches { get; set; }
+        public DbSet<ContactPhone> ContactPhones { get; set; }
+
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
 

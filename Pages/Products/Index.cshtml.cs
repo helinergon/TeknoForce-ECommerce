@@ -1,3 +1,4 @@
+//product klasöründeki index.cshtml.cs kodlarý:
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;

@@ -1,3 +1,4 @@
+//OrderStatuses klasöründeki index.cshtml.cs kodlarý:
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TeknoForce.Data;
@@ -36,6 +37,19 @@ namespace TeknoForce.Pages.Admin.OrderStatuses
 
             return RedirectToPage();
         }
+        public IActionResult OnPostDeactivate(int id)
+        {
+            var status = _context.OrderStatuses.FirstOrDefault(x => x.OrderStatusId == id);
+
+            if (status == null)
+                return NotFound();
+
+            status.IsActive = false;
+            _context.SaveChanges();
+
+            return RedirectToPage();
+        }
+
 
     }
 }

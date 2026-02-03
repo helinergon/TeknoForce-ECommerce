@@ -1,4 +1,6 @@
-﻿namespace TeknoForce.Data.Models
+﻿//OrderAtatus.cs
+
+namespace TeknoForce.Data.Models
 {
     public class OrderStatus
     {

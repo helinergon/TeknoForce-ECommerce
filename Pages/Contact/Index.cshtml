@@ -1,14 +1,53 @@
 ﻿@page
-@model TeknoForce.Pages.Contact.IndexModel
+@model TeknoForce.Pages.Admin.Contact.IndexModel
 @{
     Layout = "_AdminLayout";
     ViewData["Title"] = "İletişim";
 }
-<div class="card shadow-sm">
+
+<h3>İletişim</h3>
+
+<form method="post" class="card">
     <div class="card-body">
-        <h3 class="mb-2">@ViewData["Title"]</h3>
-        <p class="text-muted">
-            Bu sayfa yakında aktif olacak.
-        </p>
+
+        <div class="mb-3">
+            <label class="form-label">Adres</label>
+            <textarea asp-for="Contact.Address"
+                      class="form-control"
+                      rows="3"></textarea>
+            <span asp-validation-for="Contact.Address" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Telefon</label>
+            <input asp-for="Contact.Phone" class="form-control" />
+            <span asp-validation-for="Contact.Phone" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">E-posta</label>
+            <input asp-for="Contact.Email" class="form-control" />
+            <span asp-validation-for="Contact.Email" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Harita (Google Maps iframe)</label>
+            <textarea asp-for="Contact.MapEmbed"
+                      class="form-control"
+                      rows="4"></textarea>
+        </div>
+
+        <div class="form-check mb-3">
+            <input asp-for="Contact.IsActive"
+                   class="form-check-input"
+                   type="checkbox" />
+            <label class="form-check-label">
+                Yayında
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            Kaydet
+        </button>
     </div>
-</div>
+</form>

@@ -1,3 +1,4 @@
+//OrderStatuses klasöründe create.cshtml.cs kodlarý:
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TeknoForce.Data;

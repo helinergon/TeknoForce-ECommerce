@@ -1,0 +1,82 @@
+﻿@*Orders klasöründeki details.cshtml*@
+@page "{id:int}"
+@model TeknoForce.Pages.Admin.Orders.DetailsModel
+@{
+    ViewData["Title"] = "Sipariş Detayı";
+    Layout = "_AdminLayout";
+}
+
+<h3>Sipariş Detayı</h3>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <strong>Sipariş No</strong><br />
+                @Model.Order.OrderNumber
+            </div>
+
+            <div class="col-md-4">
+                <strong>Tarih</strong><br />
+                @Model.Order.CreatedDate.ToString("dd.MM.yyyy HH:mm")
+            </div>
+
+            <div class="col-md-4">
+                <strong>Durum</strong><br />
+                <form method="post"
+                      asp-page-handler="UpdateStatus"
+                      class="mt-2 d-flex gap-2 align-items-center">
+
+                    <input type="hidden" name="orderId" value="@Model.Order.OrderId" />
+
+                    <select name="orderStatusId" class="form-select form-select-sm" style="width:200px;">
+                        @foreach (var status in Model.StatusList)
+                        {
+                            <option value="@status.Value"
+                                    selected="@(status.Value == Model.Order.OrderStatusId.ToString())">
+                                @status.Text
+                            </option>
+                        }
+                    </select>
+
+                    <button type="submit" class="btn btn-sm btn-success">
+                        Kaydet
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        Sipariş Ürünleri
+    </div>
+    <div class="card-body p-0">
+        <table class="table mb-0">
+            <thead>
+                <tr>
+                    <th>Ürün</th>
+                    <th>Birim Fiyat</th>
+                    <th>Adet</th>
+                    <th>Toplam</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderItems)
+                {
+                    <tr>
+                        <td>@item.Product.Name</td>
+                        <td>@item.UnitPrice.ToString("N2") ₺</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.TotalPrice.ToString("N2") ₺</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<a asp-page="Index" class="btn btn-secondary mt-3">
+    Geri Dön
+</a>
