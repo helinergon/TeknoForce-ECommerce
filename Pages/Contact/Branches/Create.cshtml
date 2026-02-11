@@ -1,0 +1,52 @@
+﻿@page
+@model TeknoForce.Pages.Admin.Contact.Branches.CreateModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Yeni Şube Ekle";
+}
+
+<h3>Yeni Şube Ekle</h3>
+
+<form method="post" class="card">
+    <div class="card-body">
+
+        <div class="md-3">
+            <label class="form-label">Şube Adı</label>
+            <input asp-for="Branch.ContactName" class="form-control"/>
+            <span asp-validation-for="Branch.ContactName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Adres</label>
+            <textarea asp-for="Branch.Address"
+                      class="form-control"
+                      rows="3"></textarea>
+            <span asp-validation-for="Branch.Address" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Google Maps Iframe</label>
+            <textarea asp-for="Branch.MapIframe"
+                      class="form-control"
+                      rows="2"
+                      placeholder="<iframe ...></iframe>"></textarea>
+        </div>
+
+        <div class="form-check mb-3">
+            <input asp-for="Branch.IsActive"
+                   class="form-check-input"
+                   type="checkbox" />
+            <label class="form-check-label">
+                Aktif
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            Kaydet
+        </button>
+
+        <a asp-page="Index" class="btn btn-secondary ms-2">
+            Geri Dön
+        </a>
+    </div>
+</form>

@@ -8,7 +8,7 @@ namespace TeknoForce.Data
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
-
+           
         }
        
         public DbSet<Brand> Brands { get; set; }
@@ -53,8 +53,13 @@ namespace TeknoForce.Data
                 .HasOne(p => p.Specification)
                 .WithOne(s => s.Product)
                 .HasForeignKey<ProductSpecification>(s => s.ProductId)
-        .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<ContactPhone>()
+                .HasOne(cp => cp.ContactBranch)
+                .WithMany(cb => cb.ContactPhones)
+                .HasForeignKey(cp => cp.ContactBranchId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
         public DbSet<Category> Categories { get; set; }

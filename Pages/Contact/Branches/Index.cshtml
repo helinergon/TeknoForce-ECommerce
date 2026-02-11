@@ -30,7 +30,7 @@
             {
                 <tr>
                     <td>@branch.ContactBranchId</td>
-                    <td>@branch.Title</td>
+                    <td>@branch.ContactName</td>
                     <td style="max-width:400px">
                         @branch.Address
                     </td>
@@ -38,6 +38,11 @@
                         @(branch.IsActive ? "Aktif" : "Pasif")
                     </td>
                     <td>
+                        <a asp-page="/Admin/Contact/Phones/Index"
+                        asp-route-branchId="@branch.ContactBranchId"
+                        class="btn btn-sm btn-primary me-1">
+                        Telefonlar
+                        </a>
                         <a asp-page="Edit"
                            asp-route-id="@branch.ContactBranchId"
                            class="btn btn-sm btn-primary">
@@ -58,6 +63,6 @@
     </tbody>
 </table>
 
-<a asp-page="/Admin/Contact/Index" class="btn btn-secondary mt-3">
+<a asp-page="/Admin/Contact/Branches/Index" class="btn btn-secondary mt-3">
     İletişim Ayarlarına Dön
 </a>

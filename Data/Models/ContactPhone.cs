@@ -13,5 +13,7 @@ namespace TeknoForce.Data.Models
         public bool IsActive { get; set; }
         public int SortOrder { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public int ContactBranchId { get; set; }
+        public ContactBranch ContactBranch { get; set; }
     }
 }

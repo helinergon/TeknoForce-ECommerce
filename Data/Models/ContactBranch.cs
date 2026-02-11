@@ -7,13 +7,16 @@ namespace TeknoForce.Data.Models
     {
         [Key]
         public int ContactBranchId { get; set; }
+
         [Required]
-        public string Title { get; set; } 
-        [Required]
-        public string Address { get; set; }
-        public string MapEmbed { get; set; }
+        public string ContactName { get; set; }        // Şube Adı
+        public string Address { get; set; }     // Açık adres
+        public string? MapIframe { get; set; }  // Google Maps iframe
         public bool IsActive { get; set; }
         public DateTime UpdatedDate { get; set; } = DateTime.Now;
-        public object CreatedDate { get; internal set; }
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
+
+        public ICollection<ContactPhone> ContactPhones { get; set; } = new List<ContactPhone>();
+
     }
 }

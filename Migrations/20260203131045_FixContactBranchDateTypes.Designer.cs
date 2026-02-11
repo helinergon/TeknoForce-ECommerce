@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TeknoForce.Data;
 
@@ -11,9 +12,11 @@ using TeknoForce.Data;
 namespace TeknoForce.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260203131045_FixContactBranchDateTypes")]
+    partial class FixContactBranchDateTypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -167,17 +170,18 @@ namespace TeknoForce.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ContactName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<string>("MapIframe")
+                    b.Property<string>("MapEmbed")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedDate")
@@ -231,9 +235,6 @@ namespace TeknoForce.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ContactPhoneId"));
 
-                    b.Property<int>("ContactBranchId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -252,8 +253,6 @@ namespace TeknoForce.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ContactPhoneId");
-
-                    b.HasIndex("ContactBranchId");
 
                     b.ToTable("ContactPhones");
                 });
@@ -464,17 +463,6 @@ namespace TeknoForce.Migrations
                     b.Navigation("Brand");
                 });
 
-            modelBuilder.Entity("TeknoForce.Data.Models.ContactPhone", b =>
-                {
-                    b.HasOne("TeknoForce.Data.Models.ContactBranch", "ContactBranch")
-                        .WithMany("ContactPhones")
-                        .HasForeignKey("ContactBranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ContactBranch");
-                });
-
             modelBuilder.Entity("TeknoForce.Data.Models.Order", b =>
                 {
                     b.HasOne("TeknoForce.Data.Models.OrderStatus", "OrderStatus")
@@ -544,11 +532,6 @@ namespace TeknoForce.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("TeknoForce.Data.Models.ContactBranch", b =>
-                {
-                    b.Navigation("ContactPhones");
                 });
 
             modelBuilder.Entity("TeknoForce.Data.Models.Order", b =>
