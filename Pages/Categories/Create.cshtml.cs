@@ -6,7 +6,7 @@ using TeknoForce.Data.Models;
 
 namespace TeknoForce.Pages.Categories
 {
-    public class CreateModel : AdminBasePageModel
+    public class CreateModel : PageModel
     {
         private readonly AppDbContext _context;
 

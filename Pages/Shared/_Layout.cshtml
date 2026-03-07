@@ -1,0 +1,632 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TeknoForce</title>
+
+    <link rel="shortcut icon" href="~/theme/assets/img/favicon.ico" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Karma:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="~/theme/assets/css/vendor/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/theme/assets/css/plugins/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="~/theme/assets/css/plugins/glightbox.min.css" />
+
+    <!-- Main Style -->
+    <link rel="stylesheet" href="~/theme/assets/css/style.css" />
+</head>
+
+<body>
+
+    @await Html.PartialAsync("~/Pages/Shared/SitePartials/_Header.cshtml")
+
+    @RenderBody()
+
+    @await Html.PartialAsync("~/Pages/Shared/SitePartials/_Footer.cshtml")
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/theme/assets/js/vendor/popper.js"></script>
+    <script src="~/theme/assets/js/vendor/bootstrap.min.js"></script>
+    <script src="~/theme/assets/js/plugins/swiper-bundle.min.js"></script>
+    <script src="~/theme/assets/js/plugins/glightbox.min.js"></script>
+    <script src="~/theme/assets/js/script.js?v=2"></script>
+
+    <!-- FLOATING CONTACT BUTTONS -->
+    <div class="floating-contact">
+
+        <a href="tel:05421020523" class="float-btn phone">
+            <i class="bi bi-telephone-fill"></i>
+        </a>
+
+        @{
+            var message = $"Merhaba web sitenizden ulaşıyorum. Bilgi alabilir miyim?";
+            var encodedMessage = Uri.EscapeDataString(message);
+        }
+
+        <a href="https://wa.me/905421020523?text=@encodedMessage"
+           target="_blank"
+           class="float-btn whatsapp">
+            <i class="bi bi-whatsapp"></i>
+        </a>
+
+    </div>
+    <style>
+        /* Genel Arka Plan */
+        body {
+            background-color: #f4f6f9 !important; /* Açık gri endüstriyel fon */
+            color: #333;
+        }
+
+        /* Marka Alanı Arka Planı (Hafif Karanlık/Premium) */
+        .brand-showcase-bg {
+            background: radial-gradient(circle at center, #1e293b 0%, rgba(0,0,0,0.2) 100%);
+            padding: 100px 0;
+        }
+
+        /* Premium Marka Kartı */
+        .premium-brand-card {
+            position: relative;
+            background: radial-gradient(circle, rgba(208,155,59,0.8447829815519958) 0%, rgba(7,34,147,0.9036065109637605) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+            height: 100%;
+            transition: all 0.5s ease;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+            /* Üzerine gelince neon turuncu parlama */
+            .premium-brand-card:hover {
+                transform: translateY(-15px) scale(1.03);
+                border-color: var(--accent-orange);
+                box-shadow: 0 0 40px rgba(255, 122, 0, 0.3);
+            }
+
+        /* Arka plandaki dönen ışık efekti */
+        .brand-card-glow {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(transparent, var(--accent-orange), transparent 30%);
+            animation: rotateGlow 6s linear infinite;
+            opacity: 0;
+            transition: 0.5s;
+            z-index: 1;
+        }
+
+        .premium-brand-card:hover .brand-card-glow {
+            opacity: 0.4;
+        }
+
+        .brand-card-content {
+            position: relative;
+            z-index: 2;
+            text-decoration: none !important;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Logo Alanı */
+        .brand-logo-wrap {
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            display: inline-block;
+            transition: 0.5s;
+        }
+
+        .main-brand-logo {
+            max-height: 100px;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        /* Badge ve Yazılar */
+        .brand-badge {
+            display: inline-block;
+            color: var(--accent-orange);
+            border: 1px solid var(--accent-orange);
+            padding: 4px 15px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .brand-btn {
+            margin-top: 20px;
+            color: #fff;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .premium-brand-card:hover .brand-btn {
+            color: var(--accent-orange);
+        }
+
+        /* DÖNME ANİMASYONU */
+        @@keyframes rotateGlow {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Mobil Uyumluluk */
+        @@media (max-width: 768px) {
+            .premium-brand-card {
+                padding: 30px 15px;
+            }
+
+            .main-brand-logo {
+                max-height: 70px;
+            }
+        }
+
+
+        /* Ürün Kartları Şekillendirme */
+        .card {
+            border: 1px solid #1a237e !important; /* Lacivert ince çerçeve */
+            border-radius: 12px !important;
+            transition: all 0.3s ease-in-out;
+            background: #ffffff;
+            overflow: hidden;
+            <style> :root
+
+        {
+            --primary-navy: #1a237e;
+            --accent-orange: #ff7a00;
+            --industrial-gray: #f4f6f9;
+            --dark-slate: #0f172a;
+        }
+
+        body {
+            background-color: var(--industrial-gray) !important;
+            font-family: 'Karma', sans-serif;
+        }
+
+        /* Profesyonel Kart Yapısı */
+        .custom-card {
+            background: #fff;
+            border: 2px solid var(--primary-navy);
+            border-radius: 15px !important;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            overflow: hidden;
+            height: 100%;
+            position: relative;
+        }
+
+            .custom-card:hover {
+                transform: translateY(-10px);
+                border-color: var(--accent-orange) !important;
+                box-shadow: 0 15px 30px rgba(255, 122, 0, 0.2) !important;
+            }
+
+        /* WhatsApp Butonları */
+        .btn-whatsapp-custom {
+            background-color: #25d366;
+            color: white !important;
+            font-weight: 600;
+            border-radius: 8px;
+            width: 100%;
+            display: inline-block;
+            padding: 10px;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+            .btn-whatsapp-custom:hover {
+                background-color: #128c7e;
+                transform: scale(1.02);
+            }
+
+        /* Başlıklar */
+        .section-title-bold {
+            color: var(--primary-navy);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+            .section-title-bold::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 70px;
+                height: 4px;
+                background: var(--accent-orange);
+            }
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); /* Çok hafif gölge */
+        }
+
+            /* Kartın Üstüne Gelince (Hover) */
+            .card:hover {
+                transform: translateY(-10px); /* Yukarı zıplama efekti */
+                border-color: #ff7a00 !important; /* Çerçeve turuncuya döner */
+                box-shadow: 0 10px 20px rgba(255, 122, 0, 0.2) !important; /* Turuncu parlama */
+            }
+
+        /* Kart İçindeki Ürün Adı */
+        .card-title {
+            color: #1a237e; /* Lacivert başlık */
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* Fiyat Alanı */
+        .product-price {
+            color: #ff7a00; /* Turuncu fiyat */
+            font-size: 1.25rem;
+            font-weight: 800;
+        }
+
+        /* Butonları Endüstriyel Yapalım */
+        .btn-primary {
+            background-color: #1a237e !important; /* Lacivert buton */
+            border: none !important;
+            padding: 10px 20px;
+            font-weight: 600;
+            border-radius: 8px;
+        }
+
+            .btn-primary:hover {
+                background-color: #ff7a00 !important; /* Üstüne gelince turuncu */
+            }
+
+        /* WhatsApp Butonunu Özelleştirme */
+        .btn-whatsapp {
+            background-color: #25d366;
+            color: white;
+            border-radius: 50px;
+            font-size: 0.9rem;
+        }
+
+        /* Görsel Şölen CSS Dokunuşları */
+        :root {
+            --primary-orange: #ff7a00;
+            --dark-navy: #0f172a;
+            --text-gradient: linear-gradient(90deg, #ff7a00, #ffb300);
+        }
+
+        .text-gradient {
+            background: var(--text-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+
+        h2.section-title {
+            position: relative;
+            color: #1a237e;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+            h2.section-title::after {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 60px;
+                height: 4px;
+                background: #ff7a00; /* Alt çizgi turuncu */
+                border-radius: 2px;
+            }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: contain; /* Resmi bozmadan kutuya sığdırır */
+            padding: 15px;
+            background: #fff;
+        }
+        /* Arka planı hafif gri yapalım ki kartlar patlasın */
+        .bg-light-gray {
+            background-color: #f8f9fa;
+        }
+
+        /* Kart Tasarımı */
+        .category-custom-card {
+            background: #fff;
+            border: 2px solid #1a237e; /* İstediğin lacivert çerçeve */
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.3s ease-in-out;
+            text-align: center;
+            height: 100%;
+        }
+
+        /* Görsel Alanı */
+        .card-img-box {
+            height: 200px;
+            overflow: hidden;
+            border-bottom: 1px solid #eee;
+        }
+
+            .card-img-box img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover; /* Kolajları kutuya tam oturtur */
+                transition: transform 0.5s ease;
+            }
+
+        /* İçerik Alanı */
+        .card-content {
+            padding: 20px;
+        }
+
+        .category-name {
+            color: #1a237e;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .product-count {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        /* Buton */
+        .category-link-btn {
+            display: inline-block;
+            color: #ff7a00; /* Turuncu yazı */
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        /* HOVER EFEKTLERİ (Üzerine gelince) */
+        .category-custom-card:hover {
+            border-color: #ff7a00; /* Çerçeve turuncu olur */
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(26, 35, 126, 0.15);
+        }
+
+            .category-custom-card:hover .card-img-box img {
+                transform: scale(1.1);
+            }
+
+            .category-custom-card:hover .category-name {
+                color: #ff7a00;
+            }
+
+        /* Başlık Şekli */
+        .custom-title {
+            color: #1a237e;
+            font-weight: 800;
+            position: relative;
+            display: inline-block;
+        }
+
+            .custom-title::after {
+                content: '';
+                display: block;
+                width: 50%;
+                height: 4px;
+                background: #ff7a00;
+                margin: 10px auto 0;
+            }
+        /* Hero Section - Yükseklik ve Konumlandırma */
+        .hero__section {
+            position: relative;
+            /* Yüksekliği tam ekrandan (100vh) yarım ekrana (50vh) düşürdük */
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            /* Arka plan rengini (gri) kaldırdık ki video görünsün */
+            background: none !important;
+        }
+
+        /* Video Konteyneri - Tam Kaplama */
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* En arka katman */
+        }
+
+            .video-background video {
+                width: 100%;
+                height: 100%;
+                object-fit: cover; /* Videoyu boşluk kalmayacak şekilde yayar */
+            }
+
+        /* Karartma Katmanı - Yazı Okunabilirliği İçin */
+        .hero__bg--overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Hafif karanlık bir gradyan ekleyelim */
+            background: linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%);
+            z-index: 1; /* Videonun hemen önünde */
+        }
+
+        /* İçerik Katmanı - En Önde */
+        .container.position-relative {
+            /* Yazıların ve butonların videonun önünde görünmesi için z-index verdik */
+            z-index: 2 !important;
+        }
+
+        /* Yazı Renkleri ve Stilleri */
+        .hero__title {
+            color: #ffffff !important; /* Başlık beyaz olsun */
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* Okunabilirlik için hafif gölge */
+        }
+
+        .hero__desc {
+            color: rgba(255,255,255,0.8) !important; /* Açıklama açık gri/beyaz olsun */
+        }
+
+        /* Buton Stilleri (Hafif Dokunuş) */
+        .btn-primary {
+            background: linear-gradient(135deg, #ff7a00, #ff9d3c) !important;
+            border: none !important;
+            box-shadow: 0 4px 15px rgba(255,122,0,0.3);
+        }
+
+        .btn-outline-light:hover {
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+        }
+
+        /* Hero Section Styles */
+        .hero__section {
+            background: url('/theme/assets/img/hero-bg.jpg') no-repeat center center; /* Buraya şık bir görsel koymalısın */
+            background-size: cover;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+
+        .hero__bg--overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(15,23,42,0.9) 0%, rgba(15,23,42,0.4) 100%);
+        }
+
+        /* Kartları Modernleştirme */
+        .product__card {
+            border: 1px solid rgba(0,0,0,0.05) !important;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+            .product__card:hover {
+                transform: translateY(-12px) scale(1.02);
+                box-shadow: 0 25px 50px rgba(255,122,0,0.15) !important;
+                border-color: var(--primary-orange) !important;
+            }
+
+        /* Glassmorphism Navbar */
+        .header__sticky.sticky {
+            background: rgba(255, 255, 255, 0.8) !important;
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .floating-contact {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 9999;
+        }
+
+        .float-btn {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: 0.3s;
+            animation: pulse 2s infinite;
+        }
+
+        .phone {
+            background: #0d6efd;
+        }
+
+        .whatsapp {
+            background: #25D366;
+        }
+
+        .float-btn:hover {
+            transform: scale(1.1);
+        }
+
+        @@keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37,211,102, 0.6);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(37,211,102, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(37,211,102, 0);
+            }
+        }
+
+        :root {
+            --primary-orange: #ff7a00;
+            --dark-navy: #0f172a;
+            --soft-navy: #1e293b;
+            --brown: #6b4f3b;
+            --light-bg: #f8fafc;
+        }
+
+        body {
+            background: var(--light-bg);
+        }
+
+        .section--padding {
+            padding: 80px 0;
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(){
+
+            const cards = document.querySelectorAll(".product__card");
+
+            cards.forEach((card,i)=>{
+                card.style.opacity=0;
+                card.style.transform="translateY(30px)";
+
+                setTimeout(()=>{
+                    card.style.transition="all .6s ease";
+                    card.style.opacity=1;
+                    card.style.transform="translateY(0)";
+                }, i*120);
+            });
+
+        });
+    </script>
+</body>
+</html>

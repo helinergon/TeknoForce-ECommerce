@@ -4,9 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using TeknoForce.Data;
 using TeknoForce.Data.Models;
 
-namespace TeknoForce.Pages.Products
+namespace TeknoForce.Pages.Admin.Products
+
 {
-    public class DetailsModel : AdminBasePageModel
+    public class DetailsModel : PageModel
     {
         private readonly AppDbContext _context;
 

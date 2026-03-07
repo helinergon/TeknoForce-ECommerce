@@ -8,7 +8,7 @@ using TeknoForce.Data.Models;
 
 namespace TeknoForce.Pages.Admin.Orders
 {
-    public class DetailsModel : AdminBasePageModel
+    public class DetailsModel : PageModel
     {
         public List<SelectListItem> StatusList { get; set; } = new();
 
@@ -18,42 +18,37 @@ namespace TeknoForce.Pages.Admin.Orders
         {
             _context = context;
         }
-        public IActionResult OnPostUpdateStatus(int orderId, int orderStatusId)
+
+        public async Task<IActionResult> OnPostUpdateStatusAsync(int orderId, int orderStatusId)
         {
-            var order = _context.Orders
+            var order = await _context.Orders
                 .Include(o => o.OrderItems)
                 .Include(o => o.OrderStatus)
-                .FirstOrDefault(x => x.OrderId == orderId);
+                .FirstOrDefaultAsync(o => o.OrderId == orderId);
 
             if (order == null)
-                return NotFound();
+                return new JsonResult(new { success = false });
 
-            var newStatus = _context.OrderStatuses
-                .FirstOrDefault(x => x.OrderStatusId == orderStatusId);
+            var newStatus = await _context.OrderStatuses
+                .FirstOrDefaultAsync(x => x.OrderStatusId == orderStatusId);
 
             if (newStatus == null)
-                return BadRequest();
+                return new JsonResult(new { success = false });
 
             var currentStatusName = order.OrderStatus.Name;
             var newStatusName = newStatus.Name;
 
-            // Teslim edilen sipariş kilit
+            // Teslim edilen kilit
             if (currentStatusName == "Teslim Edildi")
-                return BadRequest("Teslim edilen sipariş değiştirilemez");
+                return new JsonResult(new { success = false });
 
-            // ❌ İptalden başka bir duruma geçişte STOĞA DOKUNMA
-            if (currentStatusName == "İptal Edildi" && newStatusName != "İptal Edildi")
-            {
-                // HİÇBİR ŞEY YAPMA
-            }
-
-            // ✅ İlk kez iptal ediliyorsa → stok geri ekle
+            // İlk kez iptal → stok geri ekle
             if (newStatusName == "İptal Edildi" && currentStatusName != "İptal Edildi")
             {
                 foreach (var item in order.OrderItems)
                 {
-                    var product = _context.Products
-                        .FirstOrDefault(p => p.ProductId == item.ProductId);
+                    var product = await _context.Products
+                        .FirstOrDefaultAsync(p => p.ProductId == item.ProductId);
 
                     if (product != null)
                         product.Stock += item.Quantity;
@@ -61,10 +56,17 @@ namespace TeknoForce.Pages.Admin.Orders
             }
 
             order.OrderStatusId = orderStatusId;
-            _context.SaveChanges();
 
-            return RedirectToPage(new { id = orderId });
+            await _context.SaveChangesAsync();
+
+            return new JsonResult(new
+            {
+                success = true,
+                statusName = newStatus.Name,
+                colorCode = newStatus.ColorCode
+            });
         }
+       
 
 
 
@@ -73,6 +75,8 @@ namespace TeknoForce.Pages.Admin.Orders
 
         public IActionResult OnGet(int id)
         {
+
+
             Order = _context.Orders
                 .Include(o => o.OrderStatus)
                 .FirstOrDefault(o => o.OrderId == id);
@@ -98,4 +102,5 @@ namespace TeknoForce.Pages.Admin.Orders
             return Page();
         }
     }
+    
 }

@@ -5,7 +5,7 @@ using TeknoForce.Data.Models;
 
 namespace TeknoForce.Pages.Categories
 {
-    public class IndexModel : AdminBasePageModel
+    public class IndexModel : PageModel
     {
         private readonly AppDbContext _context;
 

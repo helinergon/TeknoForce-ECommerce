@@ -6,7 +6,7 @@ using TeknoForce.Data.Models;
 
 namespace TeknoForce.Pages.Admin.OrderStatuses
 {
-    public class EditModel : AdminBasePageModel
+    public class EditModel : PageModel
     {
         private readonly AppDbContext _context;
 

@@ -3,7 +3,7 @@ using TeknoForce.Pages;
 
 namespace Rizz.Pages.Ecommerce;
 
-public class IndexModel : AdminBasePageModel
+public class IndexModel : PageModel
 {
     public void OnGet()
     {

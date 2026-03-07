@@ -1,0 +1,36 @@
+﻿@page
+@model TeknoForce.Pages.Checkout.SuccessModel
+@{
+    Layout = "_CheckoutLayout";
+}
+
+<div class="text-center mt-5">
+
+    <h2>🎉 Siparişiniz Alındı</h2>
+
+    <p class="mt-3">
+        Sipariş Numaranız:
+        <strong>@Model.OrderNumber</strong>
+    </p>
+
+    <div class="alert alert-info mt-4 text-start">
+
+        <strong>Havale / EFT Yapılabilecek Hesaplar Bilgileri</strong><br /><br />
+
+        Banka: Garanti Bankası<br />
+        IBAN: TR88 0006 2000 4360 0006 2937 12<br />
+        Alıcı: X FORCE BOYAMA TEKNOLOJİLERİ SANAYİ VE TİC.LTD.ŞTİ<br /><br />
+
+        Banka: Kuveyt Türk Katılım Bankası<br />
+        IBAN: TR09 0020 5000 0983 6069 2000 01<br />
+        Alıcı: X FORCE BOYAMA TEKNOLOJİLERİ SANAYİ VE TİC.LTD.ŞTİ<br /><br />
+
+        ⚠️ Açıklama kısmına mutlaka
+        <strong>@Model.OrderNumber</strong>
+        yazınız.
+    </div>
+    <a asp-page="/Index" class="btn btn-primary mt-3">
+        Ana Sayfaya Dön
+    </a>
+
+</div>

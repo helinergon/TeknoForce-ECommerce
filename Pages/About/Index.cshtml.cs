@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TeknoForce.Pages.Admin.AboutContents
 {
-    public class IndexModel : AdminBasePageModel
+    public class IndexModel : PageModel
     {
         private readonly AppDbContext _context;
 

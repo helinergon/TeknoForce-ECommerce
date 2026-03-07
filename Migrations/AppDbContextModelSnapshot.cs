@@ -81,7 +81,7 @@ namespace TeknoForce.Migrations
                         {
                             Id = 1,
                             FailedLoginCount = 0,
-                            Password = "AQAAAAIAAYagAAAAEFkodoXNFnTfE+8ceA/4KY7CG8LJDYnQQvx6e/NPesfppjIJThNqevosZn8It0eooQ==",
+                            Password = "AQAAAAIAAYagAAAAEJ1L7qdKj4Guux4gjhwhh0b5sfkNHKWSYu7f4UZ6eDu9qWUDBGot46QW8y3pvJd5PA==",
                             Username = "teknoforce"
                         });
                 });
@@ -315,8 +315,45 @@ namespace TeknoForce.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
 
+                    b.Property<string>("AddressNote")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AddressType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ApartmentNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BuildingNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("District")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Neighborhood")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OrderNumber")
                         .IsRequired()
@@ -324,6 +361,18 @@ namespace TeknoForce.Migrations
 
                     b.Property<int>("OrderStatusId")
                         .HasColumnType("int");
+
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("TotalAmount")
                         .HasPrecision(18, 2)
@@ -410,6 +459,9 @@ namespace TeknoForce.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CategoryId1")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -432,6 +484,8 @@ namespace TeknoForce.Migrations
                     b.HasIndex("BrandId");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("CategoryId1");
 
                     b.ToTable("Products");
                 });
@@ -660,6 +714,10 @@ namespace TeknoForce.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("TeknoForce.Data.Models.Category", null)
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId1");
+
                     b.Navigation("Brand");
 
                     b.Navigation("Category");
@@ -696,6 +754,11 @@ namespace TeknoForce.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("TeknoForce.Data.Models.Category", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("TeknoForce.Data.Models.ContactBranch", b =>

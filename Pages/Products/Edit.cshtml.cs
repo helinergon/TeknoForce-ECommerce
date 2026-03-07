@@ -6,7 +6,7 @@ using TeknoForce.Data.Models;
 using TeknoForce.Data;
 using System.IO;
 
-namespace TeknoForce.Pages.Products
+namespace TeknoForce.Pages.Admin.Products
 {
     public class EditModel : AdminBasePageModel
     {

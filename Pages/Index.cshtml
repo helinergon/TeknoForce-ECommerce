@@ -1,4 +1,260 @@
 ﻿@page
 @model TeknoForce.Pages.IndexModel
+
 @{
+    ViewData["Title"] = "Ana Sayfa";
 }
+
+
+<section class="hero__section position-relative overflow-hidden">
+    <div class="video-background">
+        <video autoplay muted loop playsinline poster="~/theme/assets/img/hero-fallback.jpg">
+            <source src="~/uploads/videos/Grey White Film Journal Animated Video Intro.mp4" type="video/mp4">
+            Tarayıcınız video etiketini desteklemiyor.
+        </video>
+    </div>
+
+    <div class="hero__bg--overlay"></div>
+
+    <div class="container position-relative z-index-1">
+        <div class="row align-items-center min-vh-100">
+            <div class="col-lg-8">
+                <span class="badge bg-warning text-dark mb-3 px-3 py-2 text-uppercase fw-bold">X-Force Farkı</span>
+                <h1 class="hero__title display-2 fw-bold mb-4 text-white">
+                    Hassas Güç, <br />
+                    <span class="text-gradient">Kusursuz Kaplama</span>
+                </h1>
+                <p class="hero__desc lead mb-5 text-light w-75">
+                    TeknoForce boyama teknolojileriyle tanışın. Profesyonel makinelerle işinizi bir üst seviyeye taşıyın.
+                </p>
+                <div class="d-flex gap-3 mt-4">
+                    <a asp-page="/Shop/Index" class="btn btn-primary btn-lg px-5 shadow-lg">Ürünleri İncele</a>
+                    <a href="https://wa.me/905421020523" target="_blank" class="btn btn-outline-light btn-lg px-5">Hemen Bilgi Al</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section--padding brand-showcase-bg">
+    <div class="container">
+        <div class="section__heading text-center mb-50">
+            <h2 class="section__heading--title custom-title">
+                YETKİLİ DİSTRİBÜTÖR</h2>
+            <p class="text-muted">Dünya Devleri TeknoForce Güvencesiyle</p>
+        </div>
+
+        <div class="row justify-content-center g-5">
+            @foreach (var brand in Model.HomeBrands)
+            {
+                <div class="col-lg-5 col-md-6">
+                    <div class="premium-brand-card">
+                        <div class="brand-card-glow"></div>
+
+                        <a asp-page="/Shop/Index" asp-route-brandId="@brand.BrandId" class="brand-card-content">
+                            <div class="brand-logo-wrap">
+                                <img src="@brand.LogoPath" alt="@brand.Name" class="main-brand-logo" />
+                            </div>
+
+                            <div class="brand-info">
+                                <h3 class="brand-name text-white">@brand.Name</h3>
+                                <div class="brand-btn">
+                                    <span>ÜRÜNLERİ KEŞFET</span>
+                                    <i class="bi bi-arrow-right-circle-fill"></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<section class="section--padding bg-light-gray">
+    <div class="container">
+        <div class="section__heading text-center mb-40">
+            <h2 class="section__heading--title custom-title">Kategoriler</h2>
+        </div>
+
+        <div class="row">
+            @foreach (var category in Model.HomeCategories)
+            {
+                <div class="col-lg-3 col-md-6 mb-30">
+                    <div class="category-custom-card">
+                        <div class="card-img-box">
+                            @if (category.Name.Contains("Makina"))
+                            {
+                                <img src="~/uploads/brands/White Modern Best Friend Photo Collage.png" alt="Makineler">
+                            }
+                            else if (category.Name.Contains("Aksesuar"))
+                            {
+                                <img src="~/uploads/brands/Black and White Aesthetic Monochrome Fashion Photo Collage (Portrait).png" alt="Aksesuarlar">
+                            }
+                            else if (category.Name.Contains("Yedek"))
+                            {
+                                <img src="~/uploads/brands/SecondHandCarParts.jpg" alt="Yedek Parçalar">
+                            }
+                            else if (category.Name.Contains("Boya"))
+                            {
+                                <img src="~/uploads/brands/White Modern Best Friend Photo Collage.png" alt="Teknoforce">
+                            }
+                        </div>
+
+                        <div class="card-content">
+                            <h3 class="category-name">@category.Name</h3>
+                            <p class="product-count">
+                                @(Model.CategoryProductCounts.ContainsKey(category.CategoryId)
+                                                            ? Model.CategoryProductCounts[category.CategoryId]
+                                                            : 0) Ürün
+                            </p>
+                            <a asp-page="/Shop/Index" asp-route-categoryId="@category.CategoryId" class="category-link-btn">
+                                Ürünleri Gör <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<section class="section--padding">
+    <div class="container">
+        <div class="section__heading text-center mb-40">
+            <h2>Yeni Ürünler</h2>
+        </div>
+
+      
+        <div class="row">
+            @foreach (var product in Model.NewProducts)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <!-- 🔥 COL EKLENDİ -->
+
+                    <div class="product__card text-center p-3 shadow-sm border-radius-5 h-100">
+
+                        @{
+                            var cover = product.Medias?
+                            .FirstOrDefault(x => x.IsCover && x.MediaType == "Image");
+
+                            var imagePath = cover != null
+                            ? Url.Content("~" + cover.FilePath)
+                            : Url.Content("~/images/no-image.png");
+                        }
+
+                        <a asp-page="/Shop/Details"
+                           asp-route-id="@product.ProductId"
+                           class="text-decoration-none text-dark">
+
+                            <img src="@imagePath"
+                                 class="img-fluid mb-3 mx-auto d-block"
+                                 style="height:220px; object-fit:contain;" />
+
+                            <h6>@product.Name</h6>
+
+                            <p class="text-muted small">
+                                @product.Brand?.Name
+                            </p>
+
+                            <strong class="d-block">
+                                @product.Price.ToString("N0") ₺
+                            </strong>
+
+                            <small class="text-muted">
+                                KDV Dahil: @product.PriceWithVat.ToString("N0") ₺
+                            </small>
+
+                        </a>
+
+                        @{
+                            var message = ($"Merhaba web sitenizdeki yeni ürünler hakkında bilgi almak istiyorum");
+                            var encodedMessage = Uri.EscapeDataString(message);
+                        }
+                        <a href="https://wa.me/905421020523?text=@encodedMessage"
+                           target="_blank"
+                           class="btn btn-success">
+                            WhatsApp ile Sor - Sipariş Ver
+                        </a>
+
+
+                        
+
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+                                 <section class="section--padding bg-light">
+    
+        <div class="section__heading text-center mb-40">
+            <h2>En Çok Satanlar</h2>
+        </div>
+
+        <div class="row">
+            <div class="row">
+                @foreach (var product in Model.BestSellers)
+                {
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+
+                        <div class="product__card text-center p-3 shadow-sm border-radius-5 h-100">
+
+                            @{
+                                var cover = product.Medias?
+                                .FirstOrDefault(x => x.IsCover && x.MediaType == "Image");
+
+                                var imagePath = cover != null
+                                ? Url.Content("~" + cover.FilePath)
+                                : Url.Content("~/images/no-image.png");
+                            }
+
+                            <a asp-page="/Shop/Details"
+                               asp-route-id="@product.ProductId"
+                               class="text-decoration-none text-dark">
+
+                                <img src="@imagePath"
+                                     class="img-fluid mb-3 mx-auto d-block"
+                                     style="height:200px; object-fit:contain;" />
+
+                                <h6>@product.Name</h6>
+
+                                <p class="text-muted small">
+                                    @product.Brand?.Name
+                                </p>
+
+                                <strong class="d-block">
+                                    @product.Price.ToString("N0") ₺
+                                </strong>
+
+                                <small class="text-muted">
+                                    KDV Dahil: @product.PriceWithVat.ToString("N0") ₺
+                                </small>
+
+                           </a>
+                           <br />
+
+
+                            @{
+                                var message = ($"Merhaba web sitenizdeki en çok satan ürünler hakkında bilgi almak istiyorum");
+                                var encodedMessage = Uri.EscapeDataString(message);
+                            }
+
+                            <a href="https://wa.me/905421020523?text=@encodedMessage"
+                               target="_blank"
+                               class="btn btn-success">
+                                WhatsApp ile Sor - Sipariş Ver
+                            </a>
+
+                            
+
+                        </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+    
+</section>
+

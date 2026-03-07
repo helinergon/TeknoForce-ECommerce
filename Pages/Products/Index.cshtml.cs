@@ -7,9 +7,9 @@ using TeknoForce.Data;
 using TeknoForce.Data.Models;
 
 
-namespace TeknoForce.Pages.Products
+namespace TeknoForce.Pages.Admin.Products
 {
-    public class IndexModel : AdminBasePageModel
+    public class IndexModel : PageModel
     {
         private readonly AppDbContext _context;
 
@@ -50,12 +50,11 @@ namespace TeknoForce.Pages.Products
                 query = query.Where(p => p.IsActive == IsActive.Value);
 
             Products = query
-                .OrderByDescending(p => p.ProductId)
+                .OrderByDescending(p => p.CreatedDate)
                 .ToList();
 
             LoadFilters();
         }
-
         public IActionResult OnPostToggleStatus(int id)
         {
             var product = _context.Products.FirstOrDefault(p => p.ProductId == id);

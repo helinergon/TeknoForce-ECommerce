@@ -1,0 +1,130 @@
+﻿@page
+@model TeknoForce.Pages.Checkout.IndexModel
+@{
+    Layout = "_CheckoutLayout";
+}
+
+<div class="row">
+    <div class="col-lg-7">
+
+        <h3>Teslimat Bilgileri</h3>
+
+        <form method="post">
+            @Html.AntiForgeryToken()
+
+            <input asp-for="FullName" class="form-control mb-3" placeholder="Ad Soyad" required />
+            <input asp-for="Phone" class="form-control mb-3" placeholder="Telefon" required />
+            <input asp-for="Email" class="form-control mb-3" placeholder="Email" required />
+
+            <div class="mb-3">
+                <label class="form-label"><strong>Adres Tipi</strong></label>
+
+                <div class="form-check">
+                    <input class="form-check-input"
+                           type="radio"
+                           name="AddressType"
+                           value="Home"
+                           checked
+                           onclick="toggleCompany(false)">
+                    <label class="form-check-label">Ev</label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input"
+                           type="radio"
+                           name="AddressType"
+                           value="Work"
+                           onclick="toggleCompany(true)">
+                    <label class="form-check-label">İş</label>
+                </div>
+            </div>
+
+            <div id="companyField" style="display:none;">
+                <input asp-for="CompanyName"
+                       class="form-control mb-3"
+                       placeholder="Firma / İş Yeri Adı" />
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <input asp-for="City" class="form-control mb-3" placeholder="İl" required />
+                </div>
+                <div class="col-md-6">
+                    <input asp-for="District" class="form-control mb-3" placeholder="İlçe" required />
+                </div>
+            </div>
+
+            <input asp-for="Neighborhood" class="form-control mb-3" placeholder="Mahalle" required />
+
+            <input asp-for="Street" class="form-control mb-3" placeholder="Cadde / Sokak" required />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <input asp-for="BuildingNo" class="form-control mb-3" placeholder="Bina No" required />
+                </div>
+                <div class="col-md-6">
+                    <input asp-for="ApartmentNo" class="form-control mb-3" placeholder="Daire No" />
+                </div>
+            </div>
+
+<textarea asp-for="AddressNote"
+          class="form-control mb-3"
+          placeholder="Adres Tarifi / Not (Opsiyonel)">
+</textarea>
+
+            <button class="btn btn-primary w-100">
+                Siparişi Oluştur
+            </button>
+        </form>
+    </div>
+
+    <div class="col-lg-5">
+
+        <h3>Sipariş Özeti</h3>
+
+        @foreach (var item in Model.Cart)
+        {
+            <div class="d-flex justify-content-between mb-2">
+                <span>@item.ProductName x @item.Quantity</span>
+                <strong>@item.TotalPrice.ToString("N0") ₺</strong>
+            </div>
+        }
+
+        <hr />
+
+        <h4 class="text-end">
+            Toplam: @Model.Total.ToString("N0") ₺
+        </h4>
+
+    </div>
+
+    <h5 class="mt-4">Ödeme Yöntemi</h5>
+
+    <div class="form-check mb-2">
+        <input class="form-check-input"
+               type="radio"
+               checked
+               disabled>
+        <label class="form-check-label">
+            Havale / EFT
+        </label>
+    </div>
+
+    <div class="form-check">
+        <input class="form-check-input"
+               type="radio"
+               disabled>
+        <label class="form-check-label text-muted">
+            💳 Online Kart ile Ödeme (Yakında)
+        </label>
+        <div class="alert alert-light border mt-3 small">
+            Online kart ile ödeme altyapımız çok yakında aktif olacaktır.
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleCompany(show) {
+        const field = document.getElementById("companyField");
+        field.style.display = show ? "block" : "none";
+    }
+</script>

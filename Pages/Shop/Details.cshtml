@@ -1,0 +1,273 @@
+﻿@page "{id:int}"
+@model TeknoForce.Pages.Shop.DetailsModel
+
+<section class="section--padding">
+    <div class="container">
+        <div class="row">
+
+            <!-- SOL: GÖRSELLER -->
+            <div class="col-lg-6">
+
+                @{
+                    var cover = Model.Product.Medias?
+                    .FirstOrDefault(x => x.IsCover && x.MediaType == "Image");
+
+                    var gallery = Model.Product.Medias?
+                    .Where(x => x.MediaType == "Image")
+                    .ToList();
+                }
+                @if (cover != null)
+                {
+                    <a href="@cover.FilePath"
+                       class="glightbox"
+                       data-gallery="product-gallery">
+
+                        <img id="mainImage"
+                             src="@cover.FilePath"
+                             class="img-fluid mb-3 zoom-image fade-transition"
+                             style="width:100%; object-fit:contain;" />
+
+                    </a>
+                }
+
+                <div class="d-flex gap-2 flex-wrap">
+
+             
+                    @foreach (var img in gallery)
+                    {
+                        <div class="thumb-wrapper">
+                            <a href="@img.FilePath"
+                               class="glightbox"
+                               data-gallery="product-gallery">
+
+                                <img src="@img.FilePath"
+                                     class="thumb-image"
+                                     onclick="changeImage('@img.FilePath', this)"
+                                     style="width:80px; height:80px; object-fit:contain;" />
+
+                            </a>
+                        </div>
+                    }
+
+                   
+                </div>
+                <div class="d-flex gap-2 flex-wrap">
+                @foreach (var media in Model.Product.Medias)
+                {
+                    if (media.MediaType == "Video")
+                    {
+                        <div class="thumb-wrapper video-thumb">
+
+                            <a href="@media.FilePath"
+                               class="glightbox"
+                               data-gallery="product-gallery">
+
+                                <img src="/images/video-placeholder.jpg"
+                                     class="thumb-image"
+                                     style="width:80px; height:80px; object-fit:cover;" />
+
+                                <span class="play-icon">▶</span>
+
+                            </a>
+                        </div>
+                    }
+                }
+                </div>
+            </div>
+
+            <!-- SAĞ: BİLGİLER -->
+            <div class="col-lg-6">
+
+                <h2>@Model.Product.Name</h2>
+                <p class="text-muted">@Model.Product.Brand?.Name</p>
+
+                <div class="mb-3">
+
+                    <h2 style="font-weight:700; font-size:34px;">
+                        @Model.Product.Price.ToString("N0") ₺
+                    </h2>
+
+                    <small class="text-muted">
+                        KDV Dahil: @Model.Product.PriceWithVat.ToString("N0") ₺
+                    </small>
+
+                </div>
+
+                <p><strong>Stok:</strong> @Model.Product.Stock</p>
+
+                <hr />
+
+                <!-- TEKNİK ÖZELLİKLER -->
+                @if (Model.Product.Specification != null)
+                {
+                    <h4>Teknik Özellikler</h4>
+
+                    <ul class="list-unstyled">
+                        <li><strong>Max Nozzle:</strong> @Model.Product.Specification.MaxNozzle</li>
+                        <li><strong>Motor Gücü:</strong> @Model.Product.Specification.MotorPowerHP</li>
+                        <li><strong>Ağırlık:</strong> @Model.Product.Specification.WeightKg kg</li>
+                        <li><strong>Set İçeriği:</strong> @Model.Product.Specification.SetContent</li>
+                        <li><strong>Kullanım Alanları:</strong> @Model.Product.Specification.UsageAreas</li>
+                        <li><strong>Kullanılabilir Malzemeler:</strong> @Model.Product.Specification.UsableMaterials</li>
+                    </ul>
+                }
+
+                <hr />
+
+                @{
+                    var message = $"Merhaba {Model.Product.Name} ürünü hakkında bilgi almak istiyorum";
+                    var encodedMessage = Uri.EscapeDataString(message);
+                }
+
+                <form method="post" id="addToCartForm">
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden" name="productId" value="@Model.Product.ProductId" />
+
+                    <button type="submit" class="btn btn-primary w-100 mt-3">
+                        🛒 Sepete Ekle
+                    </button>
+                </form>
+
+
+                <a href="https://wa.me/905421020523?text=@encodedMessage"
+                   target="_blank"
+                   class="btn btn-success">
+                    WhatsApp ile Sor - Sipariş Ver
+                </a>
+
+
+            </div>
+        </div>
+
+        <hr class="mt-5" />
+
+        <!-- YORUMLAR -->
+        <h3>Müşteri Yorumları</h3>
+
+        @if (Model.Product.Comments != null && Model.Product.Comments.Any())
+        {
+            foreach (var comment in Model.Product.Comments)
+            {
+                <div class="mb-3 p-3 border rounded">
+                    <strong>@comment.Name</strong>
+                    <small class="text-muted">
+                        (@comment.CreatedDate.ToShortDateString())
+                    </small>
+                    <p>@comment.Content</p>
+                </div>
+            }
+        }
+        else
+        {
+            <p>Henüz onaylanmış yorum bulunmamaktadır.</p>
+        }
+
+        <hr />
+
+        <!-- YORUM FORM -->
+        <h4>Yorum Yap</h4>
+
+        <form method="post">
+            <input type="text"
+                   asp-for="NewComment.Name"
+                   placeholder="Adınız"
+                   class="form-control mb-2"
+                   required />
+
+            <input type="email"
+                   asp-for="NewComment.Email"
+                   placeholder="Email"
+                   class="form-control mb-2"
+                   required />
+
+            <textarea asp-for="NewComment.Content"
+                      placeholder="Yorumunuz"
+                      class="form-control mb-2"
+                      required></textarea>
+
+            <button type="submit" class="btn btn-dark">
+                Gönder
+            </button>
+        </form>
+
+    </div>
+</section>
+<script>
+    function changeImage(src, element) {
+
+        let main = document.getElementById("mainImage");
+
+        main.style.opacity = 0;
+
+        setTimeout(() => {
+            main.src = src;
+            main.style.opacity = 1;
+        }, 150);
+
+        document.querySelectorAll(".thumb-image")
+            .forEach(img => img.classList.remove("active-thumb"));
+
+        element.classList.add("active-thumb");
+    }
+</script>
+<script>
+    document.getElementById("addToCartForm").addEventListener("submit", function(e) {
+
+        e.preventDefault();
+
+        fetch("?handler=AddToCart", {
+            method: "POST",
+            body: new FormData(this)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById("cart-count").innerText = data.count;
+            }
+        });
+    });
+</script>
+<style>
+    .thumb-wrapper {
+        display: inline-block;
+        margin: 5px;
+    }
+
+    .thumb-image {
+        border: 2px solid transparent;
+        padding: 5px;
+        cursor: pointer;
+        transition: all .25s ease;
+        border-radius: 8px;
+    }
+
+        .thumb-image:hover {
+            transform: translateY(-3px);
+        }
+
+    .active-thumb {
+        border: 2px solid #ff7a00; /* turuncu */
+        box-shadow: 0 0 10px rgba(255,122,0,.3);
+    }
+
+    .fade-transition {
+        transition: opacity .2s ease;
+    }
+    .video-thumb {
+        position: relative;
+    }
+
+    .play-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 20px;
+        color: white;
+        background: rgba(0,0,0,.6);
+        padding: 5px 8px;
+        border-radius: 50%;
+    }
+
+</style>

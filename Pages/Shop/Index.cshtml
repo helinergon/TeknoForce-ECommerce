@@ -1,0 +1,190 @@
+﻿@page
+@model TeknoForce.Pages.Shop.IndexModel
+
+@{
+    ViewData["Title"] = "Ürünler";
+}
+
+
+<section class="section--padding">
+    <div class="container">
+        <div class="section__heading text-center mb-40">
+            <h2 class="section__heading--title">Ürünler</h2>
+        </div>
+
+        <div class="row">
+
+            <!-- SOL FİLTRE -->
+            <div class="col-lg-3">
+
+                <div class="shop__sidebar shadow-sm p-4 border-radius-5">
+
+                    <div class="mb-4">
+                        <h5 class="mb-3">Kategoriler</h5>
+
+                        @foreach (var category in Model.Categories)
+                        {
+                            <div class="mb-2">
+                                <a class="d-block text-decoration-none"
+                                   asp-page="/Shop/Index"
+                                   asp-route-categoryId="@category.CategoryId">
+                                    @category.Name
+                                </a>
+                            </div>
+                        }
+                    </div>
+
+                    <hr />
+
+                    <div class="mt-4">
+                        <h5 class="mb-3">Markalar</h5>
+
+                        @foreach (var brand in Model.Brands)
+                        {
+                            <div class="mb-2">
+                                <a class="d-block text-decoration-none"
+                                   asp-page="/Shop/Index"
+                                   asp-route-brandId="@brand.BrandId">
+                                    @brand.Name
+                                </a>
+                            </div>
+                        }
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ÜRÜN GRID -->
+            <div class="col-lg-9">
+
+                <div class="row">
+
+                    @foreach (var product in Model.Products)
+                    {
+                        var cover = product.Medias?
+                        .FirstOrDefault(x => x.IsCover && x.MediaType == "Image");
+
+                        <div class="col-lg-4 col-md-6 mb-4">
+
+                            <div class="product__card text-center p-3 shadow-sm border-radius-5">
+
+                                <a asp-page="/Shop/Details"
+                                   asp-route-id="@product.ProductId"
+                                   class="text-decoration-none text-dark">
+
+                                    @if (cover != null)
+                                    {
+                                        <img src="@cover.FilePath"
+                                             class="img-fluid mb-3"
+                                             style="height:220px; object-fit:contain;" />
+                                    }
+
+                                    <h5>@product.Name</h5>
+                                    <p>@product.Brand?.Name</p>
+
+                                    <strong>
+                                        @product.PriceWithVat.ToString("N2") ₺
+                                    </strong>
+
+                                </a>
+
+                            </div>
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <style>
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            border-radius: 8px;
+            transition: all .2s ease;
+        }
+
+            .whatsapp-btn:hover {
+                background: #1ebe5d;
+                transform: translateY(-2px);
+            }
+   
+
+        .product__card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 25px;
+            transition: all .35s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+            .product__card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 20px 45px rgba(255,122,0,.18);
+                background: linear-gradient(180deg,#fff 0%, #fff7f1 100%);
+            }
+
+            .product__card h6 {
+                font-weight: 600;
+                color: var(--dark-navy);
+            }
+
+        .btn-primary {
+            background: linear-gradient(135deg,var(--primary-orange),#ff9d3c);
+            border: none;
+            border-radius: 14px;
+            padding: 10px 20px;
+            font-weight: 600;
+            transition: .3s;
+        }
+
+            .btn-primary:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 10px 20px rgba(255,122,0,.4);
+            }
+
+        .whatsapp-btn {
+            background: #25D366;
+            border: none;
+            border-radius: 14px;
+            font-weight: 500;
+        }
+
+        .section__heading--title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--dark-navy);
+            position: relative;
+        }
+
+            .section__heading--title:after {
+                content: "";
+                display: block;
+                width: 60px;
+                height: 4px;
+                background: var(--primary-orange);
+                margin: 15px auto 0;
+                border-radius: 5px;
+            }
+
+        .hero-section {
+            background: linear-gradient(135deg,var(--dark-navy),var(--soft-navy));
+            color: #fff;
+            padding: 120px 0;
+        }
+
+            .hero-section h1 {
+                font-size: 48px;
+                font-weight: 700;
+            }
+    </style>
+</section>
+
+
+

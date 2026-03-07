@@ -1,0 +1,118 @@
+﻿@page
+@model TeknoForce.Pages.Cart.IndexModel
+@{
+    Layout = "_Layout";
+}
+
+<h2>Sepetim</h2>
+
+@if (Model.CartItems.Any())
+{
+
+    <table class="table">
+        <form method="post" id="cartForm">
+            @Html.AntiForgeryToken()
+        </form>
+
+        <thead>
+            <tr>
+                <th>Ürün</th>
+                <th>Adet</th>
+                <th>Fiyat</th>
+                <th>Toplam</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CartItems)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-secondary decrease"
+                                data-id="@item.ProductId">
+                            -
+                        </button>
+
+                        <span class="mx-2 qty-@item.ProductId">
+                            @item.Quantity
+                        </span>
+
+                        <button class="btn btn-sm btn-outline-secondary increase"
+                                data-id="@item.ProductId">
+                            +
+                        </button>
+                    </td>
+                    <td>@item.UnitPrice.ToString("N0") ₺</td>
+                    <td>@item.TotalPrice.ToString("N0") ₺</td>
+                    <td>
+                        <button class="btn btn-sm btn-danger remove"
+                                data-id="@item.ProductId">
+                            Sil
+                        </button>
+                    </td>
+
+                </tr>
+
+
+            }
+            
+
+
+
+        </tbody>
+       
+    </table>
+
+    <h4 class="text-end">
+        Genel Toplam: @Model.Total.ToString("N0") ₺
+    </h4>
+
+    <a asp-page="/Checkout/Index"
+       class="btn btn-primary w-100 mt-4">
+        Ödemeye Geç
+    </a>
+}
+else
+{
+    <p>Sepetiniz boş.</p>
+}
+
+<script>
+    function updateCart(handler, productId) {
+
+        var token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+        fetch("?handler=" + handler, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "RequestVerificationToken": token
+            },
+            body: "productId=" + productId
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            }
+        });
+    }
+
+    document.querySelectorAll(".increase").forEach(btn => {
+        btn.addEventListener("click", function () {
+            updateCart("Increase", this.dataset.id);
+        });
+    });
+
+    document.querySelectorAll(".decrease").forEach(btn => {
+        btn.addEventListener("click", function () {
+            updateCart("Decrease", this.dataset.id);
+        });
+    });
+
+    document.querySelectorAll(".remove").forEach(btn => {
+        btn.addEventListener("click", function () {
+            updateCart("Remove", this.dataset.id);
+        });
+    });
+</script>

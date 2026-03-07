@@ -1,0 +1,93 @@
+﻿<div class="main__header position__relative header__sticky">
+    <div class="container">
+        <div class="main__header--inner d-flex justify-content-between align-items-center">
+
+            <!-- LOGO -->
+
+            <div class="main__logo">
+                <a asp-page="/Index" class="main__logo--link">
+                    <img src="~/uploads/brands/teknoforce logo.png"
+                         alt="TeknoForce"
+                         style="height:100px; object-fit:contain;" />
+                </a>
+            </div>
+
+            <!-- MENU -->
+            <div class="header__menu d-none d-lg-block">
+                <nav class="header__menu--navigation">
+                    <ul class="header__menu--wrapper d-flex align-items-center">
+
+                        <li class="header__menu--items">
+                            <a class="header__menu--link" asp-page="/Index">
+                                Ana Sayfa
+                            </a>
+                        </li>
+
+                        <li class="header__menu--items">
+                            <a class="header__menu--link" asp-page="/Shop/Index">
+                                Ürünler
+                            </a>
+                        </li>
+
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- RIGHT SIDE -->
+            <div class="header__account">
+                <ul class="header__account--wrapper d-flex align-items-center">
+
+                    <!-- WhatsApp -->
+
+                    <li class="header__account--items">
+                        @{
+                            var message = $"Merhaba web sitenizden ulaşıyorum. Bilgi alabilir miyim?";
+                            var encodedMessage = Uri.EscapeDataString(message);
+                        }
+
+                        <a href="https://wa.me/905421020523?text=@encodedMessage"
+                           target="_blank"
+                           class="btn btn-success">
+                            WhatsApp ile Sor
+                        </a>
+                    </li>
+
+                    <!-- Cart -->
+
+                    <li class="header__account--items position-relative">
+                        <a class="header__account--btn"
+                           asp-page="/Cart/Index">
+
+                            🛒
+
+                            <span id="cart-count"
+                                  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                  style="font-size:12px;">
+                                0
+                            </span>
+                        </a>
+                    </li>
+
+
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+<style>
+    .main__header {
+        background: #fff;
+        box-shadow: 0 8px 20px rgba(0,0,0,.05);
+    }
+
+    .header__menu--link {
+        font-weight: 500;
+        color: var(--dark-navy);
+        transition: .3s;
+    }
+
+        .header__menu--link:hover {
+            color: var(--primary-orange);
+        }
+</style>
