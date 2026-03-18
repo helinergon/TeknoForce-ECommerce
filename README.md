@@ -1,14 +1,26 @@
-# 🛒 TeknoForce E-Commerce Platformu
+# 🛒 TeknoForceBoya E-Commerce Platformu
+
+🚀 ASP.NET Core ile geliştirilmiş, admin panel ve kullanıcı tarafını kapsayan full-stack bir e-ticaret platformu.
 
 TeknoForce, ASP.NET Core Razor Pages kullanılarak geliştirilmiş, ürün yönetimi, içerik kontrolü ve yönetim süreçlerini kapsayan kapsamlı bir web uygulamasıdır.  
 
 Bu proje, gerçek bir e-ticaret altyapısının temel bileşenlerini modellemek amacıyla geliştirilmiş olup; kullanıcı tarafında ürünlerin sergilenmesi ve admin panel üzerinden tüm veri akışının yönetilmesini sağlayan uçtan uca bir sistem sunmaktadır.
+---
+## 🎬 Demo
+
+![Demo](./screenshots/demo.gif)
+---
+
+![.NET](https://img.shields.io/badge/.NET-8-blue)
+![ASP.NET Core](https://img.shields.io/badge/ASP.NET-Core-green)
+![EF Core](https://img.shields.io/badge/EntityFramework-Core-purple)
+![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
 
 ---
 
 ## 🎯 Proje Yaklaşımı
 
-TeknoForce geliştirilirken yalnızca bir arayüz oluşturmak değil, aynı zamanda sürdürülebilir, yönetilebilir ve genişletilebilir bir sistem mimarisi kurmak hedeflenmiştir.  
+TeknoForceBoya geliştirilirken yalnızca bir arayüz oluşturmak değil, aynı zamanda sürdürülebilir, yönetilebilir ve genişletilebilir bir sistem mimarisi kurmak hedeflenmiştir.  
 
 Bu doğrultuda veri yönetimi, modüler yapı, ilişkisel veritabanı tasarımı ve backend süreçlerinin kontrollü ilerlemesi ön planda tutulmuştur.
 
@@ -34,22 +46,21 @@ Bu doğrultuda veri yönetimi, modüler yapı, ilişkisel veritabanı tasarımı
 ## 🛠 Kullanılan Teknolojiler
 
 - ASP.NET Core Razor Pages  
-- Entity Framework Core  
-- Microsoft SQL Server (LocalDB)  
-- Bootstrap  
-
+- Entity Framework Core (Code First & Migrations)  
+- Microsoft SQL Server  
+- Bootstrap (Responsive UI)  
 ---
+## 🚀 Öne Çıkan Teknik Detaylar
 
-## 🏗 Teknik Yapı
+Bu proje geliştirilirken yalnızca arayüz değil, backend süreçleri ve veri yönetimi detaylı şekilde ele alınmıştır.
 
-Proje geliştirme sürecinde aşağıdaki teknik prensiplere odaklanılmıştır:
-
-- Entity Framework Core ile ilişkisel veritabanı yönetimi  
-- Migration tabanlı veri kontrolü ve versiyonlama  
-- Razor Pages ile modüler ve okunabilir sayfa yapısı  
-- CRUD işlemlerinde düzenli ve sürdürülebilir kod organizasyonu  
-- Backend süreçlerinin kontrollü ve adım adım geliştirilmesi  
-
+- Entity Framework Core ile ilişkisel veritabanı kurgusu oluşturuldu  
+- Migration yapısı kullanılarak veritabanı versiyon kontrolü sağlandı  
+- Admin panel üzerinden tüm veriler dinamik olarak yönetilebilir hale getirildi  
+- Razor Pages ile modüler ve sürdürülebilir sayfa yapısı kuruldu  
+- CRUD işlemleri temiz ve düzenli bir yapı ile implement edildi  
+- Ürün, kategori, marka ve sipariş süreçleri birbirine bağlı şekilde tasarlandı  
+- Form işlemlerinde model binding ve validation yapıları kullanıldı  
 ---
 
 ## 🌐 Canlı Demo
@@ -116,10 +127,20 @@ Proje geliştirme sürecinde aşağıdaki teknik prensiplere odaklanılmıştır
 ![WhatsApp](./screenshots/whatsapp.png)
 
 ---
+## 🧠 Bu Projede Kazandıklarım
+
+Bu proje sürecinde sadece bir arayüz geliştirmekle kalmayıp, backend süreçlerini ve veri yönetimini uçtan uca deneyimledim.
+
+- Gerçek bir admin panelin nasıl kurgulandığını öğrendim  
+- Veritabanı ilişkilerinin sistem tasarımındaki önemini deneyimledim  
+- CRUD işlemlerini sürdürülebilir bir yapıda yönetmeyi geliştirdim  
+- ASP.NET Core ile modüler ve genişletilebilir yapı kurma pratiği kazandım  
+- Bir projeyi fikir aşamasından yayına alma sürecini uçtan uca yönettim  
+---
 
 ## 💡 Genel Değerlendirme
 
-TeknoForce, sadece bir arayüz projesi değil; veri yönetimi, sistem kurgusu ve backend geliştirme süreçlerini içeren bütünsel bir web uygulaması olarak tasarlanmıştır.  
+TeknoForceBoya, sadece bir arayüz projesi değil; veri yönetimi, sistem kurgusu ve backend geliştirme süreçlerini içeren bütünsel bir web uygulaması olarak tasarlanmıştır.  
 
 Proje, özellikle admin panel geliştirme, veritabanı ilişkileri ve backend mimarisi konularında güçlü bir temel oluşturmayı hedeflemektedir.
 
