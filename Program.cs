@@ -13,9 +13,11 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        sqlServerOptions => sqlServerOptions.UseCompatibilityLevel(120)
     )
 );
 builder.Services.AddDistributedMemoryCache();
